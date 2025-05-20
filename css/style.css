@@ -1392,11 +1392,6 @@ footer {
         text-align: center;
         max-width: 600px;
     }
-    
-    .app-screenshots-grid {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 600px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -1409,41 +1404,38 @@ footer {
     }
     
     .logo-number, .logo-text {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
     
-    .app-screenshots-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .tagline {
+        font-size: 1.2rem;
+        white-space: normal;
+        line-height: 1.4;
     }
     
-    .phone-mockup {
-        width: 180px;
-        height: 320px;
+    .accent-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-top: -0.5rem;
     }
     
-    .large-mockup {
-        width: 250px;
-        height: 500px;
+    .white-text {
+        display: inline-block;
+        margin-top: 0.5rem;
     }
     
-    .counter-display {
-        font-size: 5rem;
+    .app-store-button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
     }
     
-    .clicks-text {
-        font-size: 3rem;
+    .ios-only {
+        font-size: 0.8rem;
     }
     
-    .manifesto blockquote {
-        font-size: 1.8rem;
-        padding: 0 1rem;
-    }
-    
-    .screenshot-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 3rem;
+    .waitlist-title {
+        font-size: 1.2rem;
+        white-space: normal;
     }
     
     .footer-content {
@@ -1458,6 +1450,72 @@ footer {
     
     .footer-links {
         align-items: center;
+    }
+    
+    /* Adjust film roll for mobile */
+    .film-roll {
+        width: 40px;
+        height: 50vh;
+        right: 5px;
+    }
+}
+
+/* Additional mobile optimizations for small screens */
+@media (max-width: 480px) {
+    .main-header {
+        padding: 1rem;
+    }
+    
+    .polaroid-container {
+        width: 270px;
+        height: 350px;
+        margin-bottom: 2rem;
+    }
+    
+    .logo-number, .logo-text {
+        font-size: 3rem;
+    }
+    
+    .tagline {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .accent-text {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .app-store {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .app-store-button {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .ios-only {
+        margin-top: 0.2rem;
+    }
+    
+    #signup-form {
+        flex-direction: column;
+    }
+    
+    #signup-form input, 
+    #signup-form button {
+        width: 100%;
+        border-radius: 8px;
+    }
+    
+    #signup-form button {
+        margin-top: 0.5rem;
+    }
+    
+    .footer-links a {
+        font-size: 0.9rem;
     }
 }
 
