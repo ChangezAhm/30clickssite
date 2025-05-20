@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 CLICKS - Digital Disposable Camera</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="description" content="30 CLICKS - A digital disposable camera. Take 30 photos with our app, and get your prints delivered to your door.">
+    <meta name="theme-color" content="#000000">
+</head>
+<body>
+    <!-- Initial counter animation that overlays the page -->
+    <div class="loader">
+        <div class="counter-animation">00</div>
+    </div>
+    
+    <!-- Film roll decoration that moves on scroll -->
+    <div class="film-roll">
+        <div class="film-strip"></div>
+    </div>
+    
+    <header class="main-header">
+        <div class="main-content">
+            <!-- Split the header into two columns -->
+            <div class="header-left">
+                <!-- Polaroid gallery moved to the left side -->
+                <div class="polaroid-container">
+                    <div class="polaroid-stack">
+                        <div class="polaroid" data-index="0">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo11.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                        <div class="polaroid" data-index="1">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo7.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                        <div class="polaroid" data-index="2">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo10.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                        <div class="polaroid" data-index="3">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo12.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                        <div class="polaroid" data-index="4">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo8.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                        <div class="polaroid" data-index="5">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo6.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                        <div class="polaroid" data-index="6">
+                            <div class="polaroid-image">
+                                <img src="images/gallery/photo9.jpg" alt="Polaroid photo">
+                            </div>
+                            <div class="polaroid-caption">Taken on 30 CLICKS</div>
+                        </div>
+                    </div>
+                    <div class="gallery-controls">
+                        <div class="gallery-counter">1/7</div>
+                        <div class="gallery-navigation">
+                            <button class="gallery-prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="gallery-next"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <!-- Logo and content moved to the right side -->
+                <div class="logo">
+                    <span class="logo-number">30</span>
+                    <span class="logo-text">CLICKS</span>
+                </div>
+                
+                <div class="header-content">
+                    <p class="tagline">THE DIGITAL DISPOSABLE CAMERA APP</p>
+                    <p class="accent-text">More time in the moment. <span class="white-text">30 pictures, no scrolling, no retaking, no previewing.</span> <span class="white-text">Sent to our printers the minute you finish your roll.</span></p>
+                    
+                    <div class="app-store">
+                        <a href="#" class="app-store-button">
+                            <i class="fab fa-apple"></i> Download the Beta on TestFlight
+                        </a>
+                        <span class="ios-only">iOS Exclusive</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+    <section class="cta-section">
+        <div class="cta-content">
+            <p class="waitlist-title">JOIN THE WAITLIST</p>
+            <form id="signup-form">
+                <input type="email" id="email" placeholder="Your email address" required>
+                <button type="submit">JOIN NOW</button>
+            </form>
+            <div id="confirmation" class="hidden">Thank you! We'll notify you when the app launches.</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo">
+                    <span class="logo-number">30</span>
+                    <span class="logo-text">CLICKS</span>
+                </div>
+                <p>THE DIGITAL DISPOSABLE CAMERA APP</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <div class="legal-popup" id="privacy-policy">
+                    <div class="legal-content">
+                        <h4>Privacy Policy</h4>
+                        <p>30 CLICKS LTD does not collect, store or process your personal data beyond what is necessary to provide you with our service. We only collect your email address for order notifications and delivery updates.</p>
+                        <p>Your photos remain private and are only used to fulfill your print orders. We do not use your photos for any other purpose, and they are deleted from our servers once your order has been processed.</p>
+                        <p>We do not share your data with any third parties except for our printing partner who needs your delivery information to fulfill your order.</p>
+                    </div>
+                </div>
+                <div class="legal-popup" id="terms-service">
+                    <div class="legal-content">
+                        <h4>Terms of Service</h4>
+                        <p>By using 30 CLICKS, you agree not to upload any content that is illegal, offensive, or infringes on others' rights. We reserve the right to refuse service for any violations.</p>
+                        <p>Once you've taken 30 photos, your prints will be automatically ordered. Please ensure your delivery address is accurate as we cannot reissue prints for incorrect addresses.</p>
+                        <p>Print delivery typically takes 5-7 business days, though times may vary based on your location. All sales are final and we do not offer refunds except in cases where prints arrive damaged.</p>
+                    </div>
+                </div>
+                <a href="mailto:hello@30clicks.com">Contact Us (don't, I don't want to hear from you)</a>
+            </div>
+            <div class="social-links">
+                <a href="https://instagram.com/30.clicks" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 30 CLICKS LTD. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
