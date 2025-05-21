@@ -5,13 +5,13 @@ import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/fire
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDBZgg0wTrQcSVkYlDPDPBAtSCRK1aIV_s",
-  authDomain: "clicks-site.firebaseapp.com",
-  projectId: "clicks-site",
-  storageBucket: "clicks-site.firebasestorage.app",
-  messagingSenderId: "737273956105",
-  appId: "1:737273956105:web:6ad31d99fe9199c8ec35d8",
-  measurementId: "G-3FGR95YLZ9"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
