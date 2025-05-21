@@ -29,17 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper function to format number with leading zero
     const formatNumber = (num) => String(num).padStart(2, '0');
     
-    // Show 30 in the counter and then remove loader
-    if (counterAnimation) {
-        counterAnimation.textContent = "30";
-    }
-    
+    // Shows "30" in the counter (already set in HTML) and then fades away the loader
     setTimeout(() => {
         if (loader) {
             loader.style.opacity = "0";
             loader.style.visibility = "hidden";
         }
-    }, 1000);
+    }, 1500);
     
     // Polaroid gallery functionality
     const polaroids = document.querySelectorAll('.polaroid');
