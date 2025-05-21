@@ -26,16 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('.loader');
     const counterAnimation = document.querySelector('.counter-animation');
     
-    // Helper function to format number with leading zero
-    const formatNumber = (num) => String(num).padStart(2, '0');
-    
-    // Shows "30" in the counter (already set in HTML) and then fades away the loader
+    // Shows the counter "30" and then fades away the loader
+    // First animate the counter (using CSS animation)
+    // Then fade out the entire loader after the counter animation
     setTimeout(() => {
         if (loader) {
-            loader.style.opacity = "0";
-            loader.style.visibility = "hidden";
+            loader.classList.add('hidden');
+            
+            // Finally, remove the loader from the DOM after transitions complete
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 1000); // Match this to the CSS transition duration
         }
-    }, 1500);
+    }, 2300); // Wait for counter animation to complete + small delay
     
     // Polaroid gallery functionality
     const polaroids = document.querySelectorAll('.polaroid');
