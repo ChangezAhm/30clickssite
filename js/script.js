@@ -22,23 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // Loader animation
+    // Loader animation - immediately fade out and remove it
     const loader = document.querySelector('.loader');
-    const counterAnimation = document.querySelector('.counter-animation');
     
-    // Shows the counter "30" and then fades away the loader
-    // First animate the counter (using CSS animation)
-    // Then fade out the entire loader after the counter animation
-    setTimeout(() => {
-        if (loader) {
-            loader.classList.add('hidden');
-            
-            // Finally, remove the loader from the DOM after transitions complete
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 1000); // Match this to the CSS transition duration
-        }
-    }, 2300); // Wait for counter animation to complete + small delay
+    // Immediately start removing the loader
+    if (loader) {
+        // Set to hidden immediately
+        loader.classList.add('hidden');
+        
+        // Remove from DOM after animation completes
+        setTimeout(() => {
+            loader.remove(); // Completely remove from DOM
+        }, 1000);
+    }
     
     // Polaroid gallery functionality
     const polaroids = document.querySelectorAll('.polaroid');
