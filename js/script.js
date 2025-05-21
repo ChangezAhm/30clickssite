@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Smooth scrolling with offset for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return; // Skip if it's just a placeholder link
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Add a small offset to the scroll position to make sure the section title is visible
+                const yOffset = -80; 
+                const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
     // Loader animation
     const loader = document.querySelector('.loader');
     const counterAnimation = document.querySelector('.counter-animation');
