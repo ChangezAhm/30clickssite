@@ -98,11 +98,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize gallery
         updateGallery();
         
-        // Auto-rotate gallery every 5 seconds
-        let galleryInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalPolaroids;
-            updateGallery();
-        }, 5000);
+        // Auto-rotate gallery every 3 seconds
+        let galleryInterval;
+        
+        function startGalleryRotation() {
+            // Clear any existing interval first
+            if (galleryInterval) clearInterval(galleryInterval);
+            
+            // Create new interval
+            galleryInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalPolaroids;
+                updateGallery();
+            }, 3000); // Faster rotation (3s instead of 5s)
+        }
+        
+        // Start the rotation immediately
+        startGalleryRotation();
         
         // Pause auto-rotation when hovering over the gallery
         const polaroidStack = document.querySelector('.polaroid-stack');
@@ -112,10 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             polaroidStack.addEventListener('mouseleave', () => {
-                galleryInterval = setInterval(() => {
-                    currentIndex = (currentIndex + 1) % totalPolaroids;
-                    updateGallery();
-                }, 5000);
+                startGalleryRotation();
             });
         }
     }
