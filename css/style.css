@@ -1805,6 +1805,17 @@ p {
         max-width: 100%;
         width: 100%;
     }
+    
+    /* Hide icons on mobile - keep desktop unchanged */
+    .feedback-icon-container {
+        display: none;
+    }
+    
+    /* Adjust spacing since icons are gone */
+    .feedback-method h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
 }
 
 /* Responsive styles */
