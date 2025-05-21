@@ -28,18 +28,35 @@ const validateFirebaseConfig = () => {
   return true;
 };
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID
+// Fallback Firebase configuration in case environment variables aren't available
+const fallbackConfig = {
+  apiKey: "AIzaSyAGEoDh15_-FuOAD7Cwcni2iLHUOGcmrgM",
+  authDomain: "clicks-site.firebaseapp.com",
+  databaseURL: "https://clicks-site-default-rtdb.firebaseio.com",
+  projectId: "clicks-site",
+  storageBucket: "clicks-site.firebasestorage.app",
+  messagingSenderId: "737273956105",
+  appId: "1:737273956105:web:6ad31d99fe9199c8ec35d8",
+  measurementId: "G-3FGR95YLZ9"
 };
 
-console.log("Firebase config loaded. Project ID:", process.env.FIREBASE_PROJECT_ID);
+// Check environment variables availability
+console.log("ENV Check - FIREBASE_API_KEY:", process.env.FIREBASE_API_KEY ? "Available" : "Missing");
+console.log("ENV Check - FIREBASE_AUTH_DOMAIN:", process.env.FIREBASE_AUTH_DOMAIN ? "Available" : "Missing");
+
+// Your web app's Firebase configuration - use environment variables if available, fallback if not
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY || fallbackConfig.apiKey,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN || fallbackConfig.authDomain,
+  projectId: process.env.FIREBASE_PROJECT_ID || fallbackConfig.projectId,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET || fallbackConfig.storageBucket,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || fallbackConfig.messagingSenderId,
+  appId: process.env.FIREBASE_APP_ID || fallbackConfig.appId,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID || fallbackConfig.measurementId,
+  databaseURL: process.env.FIREBASE_DATABASE_URL || fallbackConfig.databaseURL
+};
+
+console.log("Firebase config loaded. Using Project ID:", firebaseConfig.projectId);
 
 // Initialize Firebase
 let app, analytics, db;

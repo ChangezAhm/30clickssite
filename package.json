@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack --mode production",
     "build:dev": "NODE_ENV=development webpack --mode development",
-    "dev": "NODE_ENV=development webpack --mode development --watch"
+    "dev": "NODE_ENV=development webpack --mode development --watch",
+    "debug-env": "node debug-env.js"
   },
   "keywords": [],
   "author": "",
