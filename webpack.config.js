@@ -2,7 +2,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: {
     main: './js/script.js',
   },
@@ -25,6 +25,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new Dotenv()
+    new Dotenv({
+      systemvars: true // This allows loading env vars from the system too
+    })
   ]
 };

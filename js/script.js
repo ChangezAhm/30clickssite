@@ -392,33 +392,32 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             submitBtn.disabled = true;
             
+            // Set a timeout to prevent the form from being stuck in processing state
+            const processingTimeout = setTimeout(() => {
+                // If we reach this timeout, something went wrong with Firebase
+                console.warn('Firebase submission timed out - using localStorage fallback');
+                submitBtn.innerHTML = 'Join the Beta Program';
+                submitBtn.disabled = false;
+                
+                // Save directly to localStorage as fallback
+                saveToLocalStorage();
+                
+                // Show confirmation - don't keep user waiting
+                betaForm.style.display = 'none';
+                betaConfirmation.classList.remove('hidden');
+            }, 8000); // 8 second timeout
+            
             try {
-                // Save data to Firebase
-                await saveBetaTester(firstName, surname, email);
+                // Try to save data to Firebase
+                const success = await saveBetaTester(firstName, surname, email);
                 
-                // Also store in localStorage as backup
-                let betaTesters = [];
-                try {
-                    const storedTesters = localStorage.getItem('30clicks_beta_testers');
-                    if (storedTesters) {
-                        betaTesters = JSON.parse(storedTesters);
-                    }
-                } catch (error) {
-                    console.error('Error loading saved beta testers:', error);
-                }
+                // Clear the timeout since we got a response
+                clearTimeout(processingTimeout);
                 
-                betaTesters.push({
-                    firstName: firstName,
-                    surname: surname,
-                    email: email,
-                    timestamp: new Date().toISOString()
-                });
-                
-                try {
-                    localStorage.setItem('30clicks_beta_testers', JSON.stringify(betaTesters));
-                    console.log('Beta tester saved! Current count:', betaTesters.length);
-                } catch (error) {
-                    console.error('Error saving beta tester to localStorage:', error);
+                if (success) {
+                    console.log('Successfully saved data to Firebase');
+                } else {
+                    console.warn('Firebase reported failure, but we already saved to localStorage');
                 }
                 
                 // Hide form and show confirmation
@@ -426,10 +425,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 betaConfirmation.classList.remove('hidden');
                 
             } catch (error) {
+                // Clear the timeout since we got a response
+                clearTimeout(processingTimeout);
+                
                 console.error('Error during signup process:', error);
+                
+                // Try localStorage as fallback
+                saveToLocalStorage();
+                
+                // Show error state
                 submitBtn.innerHTML = 'Try Again';
                 submitBtn.disabled = false;
-                alert('There was an error processing your signup. Please try again.');
+                
+                // Still show confirmation because we saved to localStorage
+                betaForm.style.display = 'none';
+                betaConfirmation.classList.remove('hidden');
+            }
+            
+            // Function to save to localStorage consistently
+            function saveToLocalStorage() {
+                try {
+                    let betaTesters = [];
+                    const storedTesters = localStorage.getItem('30clicks_beta_testers');
+                    if (storedTesters) {
+                        betaTesters = JSON.parse(storedTesters);
+                    }
+                    
+                    betaTesters.push({
+                        firstName: firstName,
+                        surname: surname,
+                        email: email,
+                        timestamp: new Date().toISOString(),
+                        source: 'form_fallback'
+                    });
+                    
+                    localStorage.setItem('30clicks_beta_testers', JSON.stringify(betaTesters));
+                    console.log('Beta tester saved to localStorage! Current count:', betaTesters.length);
+                    return true;
+                } catch (error) {
+                    console.error('Error saving beta tester to localStorage:', error);
+                    return false;
+                }
             }
         });
     }

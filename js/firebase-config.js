@@ -1,7 +1,32 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported as isAnalyticsSupported } from "firebase/analytics";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+
+// Verify Firebase configuration
+const validateFirebaseConfig = () => {
+  const requiredEnvVars = [
+    'FIREBASE_API_KEY',
+    'FIREBASE_AUTH_DOMAIN',
+    'FIREBASE_PROJECT_ID',
+    'FIREBASE_STORAGE_BUCKET',
+    'FIREBASE_MESSAGING_SENDER_ID',
+    'FIREBASE_APP_ID'
+  ];
+  
+  const missingVars = requiredEnvVars.filter(varName => 
+    !process.env[varName] || 
+    process.env[varName].includes('your_') || 
+    process.env[varName] === 'undefined'
+  );
+  
+  if (missingVars.length > 0) {
+    console.error(`Missing or invalid Firebase config: ${missingVars.join(', ')}`);
+    return false;
+  }
+  
+  return true;
+};
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,13 +39,43 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
+console.log("Firebase config loaded. Project ID:", process.env.FIREBASE_PROJECT_ID);
+
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+let app, analytics, db;
+
+try {
+  if (validateFirebaseConfig()) {
+    app = initializeApp(firebaseConfig);
+    
+    // Initialize analytics only if supported
+    isAnalyticsSupported().then(supported => {
+      if (supported) {
+        analytics = getAnalytics(app);
+      } else {
+        console.log("Firebase analytics is not supported in this environment");
+      }
+    });
+    
+    db = getFirestore(app);
+    console.log("Firebase initialized successfully");
+  } else {
+    throw new Error("Invalid Firebase configuration");
+  }
+} catch (error) {
+  console.error("Failed to initialize Firebase:", error);
+  // Set up fallback for saving data locally if Firebase fails
+}
 
 // Function to save beta tester data to Firestore
 export async function saveBetaTester(firstName, surname, email) {
+  if (!db) {
+    console.error("Firebase not initialized, cannot save beta tester");
+    // Save to localStorage as fallback
+    saveToLocalStorage(firstName, surname, email);
+    return false;
+  }
+  
   try {
     const docRef = await addDoc(collection(db, "beta-testers"), {
       firstName: firstName,
@@ -30,9 +85,39 @@ export async function saveBetaTester(firstName, surname, email) {
       userAgent: navigator.userAgent
     });
     console.log("Beta tester saved with ID: ", docRef.id);
+    
+    // Also save to localStorage as backup
+    saveToLocalStorage(firstName, surname, email);
     return true;
   } catch (error) {
-    console.error("Error saving beta tester: ", error);
+    console.error("Error saving beta tester to Firestore: ", error);
+    // Save to localStorage as fallback
+    saveToLocalStorage(firstName, surname, email);
+    return false;
+  }
+}
+
+// Fallback function to save data to localStorage
+function saveToLocalStorage(firstName, surname, email) {
+  try {
+    let betaTesters = [];
+    const storedTesters = localStorage.getItem('30clicks_beta_testers');
+    if (storedTesters) {
+      betaTesters = JSON.parse(storedTesters);
+    }
+    
+    betaTesters.push({
+      firstName: firstName,
+      surname: surname,
+      email: email,
+      timestamp: new Date().toISOString()
+    });
+    
+    localStorage.setItem('30clicks_beta_testers', JSON.stringify(betaTesters));
+    console.log('Beta tester saved to localStorage as fallback');
+    return true;
+  } catch (error) {
+    console.error('Error saving to localStorage:', error);
     return false;
   }
 }
