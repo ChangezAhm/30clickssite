@@ -1,0 +1,24 @@
+/*
+  Content-Type: text/html; charset=utf-8
+*.js
+  Content-Type: application/javascript; charset=utf-8
+*.css
+  Content-Type: text/css; charset=utf-8
+*.jpg
+  Content-Type: image/jpeg
+*.png
+  Content-Type: image/png
+*.svg
+  Content-Type: image/svg+xml
+*.ico
+  Content-Type: image/x-icon
+*.woff
+  Content-Type: font/woff
+*.woff2
+  Content-Type: font/woff2
+*.ttf
+  Content-Type: font/ttf
+*.eot
+  Content-Type: application/vnd.ms-fontobject
+*.otf
+  Content-Type: font/otf
