@@ -1,3 +1,5 @@
+import { saveBetaTester } from './firebase-config.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // Smooth scrolling with offset for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -375,10 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const betaConfirmation = document.getElementById('beta-confirmation');
     
     if (betaForm && betaConfirmation) {
-        betaForm.addEventListener('submit', (e) => {
+        betaForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Simulate sending data
+            // Get form data
             const firstName = document.getElementById('first-name').value;
             const surname = document.getElementById('surname').value;
             const email = document.getElementById('beta-email').value;
@@ -390,12 +392,11 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             submitBtn.disabled = true;
             
-            // Simulate a server request with delay
-            setTimeout(() => {
-                betaForm.style.display = 'none';
-                betaConfirmation.classList.remove('hidden');
+            try {
+                // Save data to Firebase
+                await saveBetaTester(firstName, surname, email);
                 
-                // Store beta tester data
+                // Also store in localStorage as backup
                 let betaTesters = [];
                 try {
                     const storedTesters = localStorage.getItem('30clicks_beta_testers');
@@ -417,9 +418,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('30clicks_beta_testers', JSON.stringify(betaTesters));
                     console.log('Beta tester saved! Current count:', betaTesters.length);
                 } catch (error) {
-                    console.error('Error saving beta tester:', error);
+                    console.error('Error saving beta tester to localStorage:', error);
                 }
-            }, 2000);
+                
+                // Hide form and show confirmation
+                betaForm.style.display = 'none';
+                betaConfirmation.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error during signup process:', error);
+                submitBtn.innerHTML = 'Try Again';
+                submitBtn.disabled = false;
+                alert('There was an error processing your signup. Please try again.');
+            }
         });
     }
     

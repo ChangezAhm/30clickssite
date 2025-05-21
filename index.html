@@ -109,7 +109,7 @@
                         </div>
                         
                         <div class="beta-button-wrapper">
-                            <a href="#" class="beta-action-button feedback-button">
+                            <a href="#beta-feedback" class="beta-action-button feedback-button">
                                 <i class="fas fa-comment-alt"></i> Provide feedback on the beta
                             </a>
                         </div>
@@ -119,6 +119,7 @@
         </div>
     </header>
 
+    <div class="section-divider"></div>
     
     <section id="beta-signup" class="beta-signup-section">
         <div class="beta-container">
@@ -188,6 +189,8 @@
         </div>
     </section>
     
+    <div class="section-divider"></div>
+    
     <section id="beta-info" class="beta-info-section">
         <div class="beta-container">
             <div class="beta-sections-header">
@@ -205,8 +208,8 @@
                                 <h3>Beta Test Info: What You're Getting Into</h3>
                             </div>
                             <div class="info-body">
-                                <p>As a beta tester for 30 Clicks, you're getting a limited preview of the full experience — 10 photos (instead of the usual 30), printed and delivered to you for free.</p>
-                                <p>This isn't just a tech test — we want you to experience the whole thing, from the moment you open the app to the moment your photos land in your mailbox.</p>
+                                <p>As a beta tester for 30 Clicks, you're getting a limited preview of the full experience - 10 photos (instead of the usual 30), printed and delivered to you for free.</p>
+                                <p>This isn't just a tech test, we want you to experience the whole thing, from the moment you open the app to the moment your photos land in your mailbox.</p>
                             </div>
                         </div>
                     </div>
@@ -219,11 +222,11 @@
                             </div>
                             <div class="info-body">
                                 <ul class="testing-list">
-                                    <li><i class="fas fa-mobile-alt"></i> The app: is it smooth, confusing, delightful, glitchy?</li>
-                                    <li><i class="fas fa-box"></i> Delivery & packaging: how does it arrive? Is it secure? Does it feel special?</li>
+                                    <li><i class="fas fa-mobile-alt"></i> The app: is it smooth, confusing, crap, glitchy, sexy?</li>
+                                    <li><i class="fas fa-box"></i> Delivery & packaging: how does it arrive? Does it feel special? Do you care?</li>
                                     <li><i class="fas fa-images"></i> Print quality: how do your photos look and feel?</li>
                                 </ul>
-                                <p>We're looking for open, honest feedback — that's what helps us most.</p>
+                                <p>We're looking for open, honest feedback, that's what helps us most.</p>
                             </div>
                         </div>
                     </div>
@@ -237,7 +240,7 @@
                             <div class="info-body">
                                 <ul class="testing-list">
                                     <li><i class="fas fa-money-bill-wave"></i> How much would you pay for a 30-photo print experience like this?</li>
-                                    <li><i class="fas fa-map-marker-alt"></i> Live reactions while using the app? Send them our way — in the moment insights are gold.</li>
+                                    <li><i class="fas fa-map-marker-alt"></i> Live reactions while using the app? Send them our way. In the moment insights are gold.</li>
                                     <li><i class="fas fa-exclamation-triangle"></i> Any bugs or crashes? Please report them right away. First, sorry. Second, we'll fix them fast.</li>
                                 </ul>
                             </div>
@@ -251,7 +254,7 @@
                                 <h3>Your Data</h3>
                             </div>
                             <div class="info-body">
-                                <p>All your data is safely stored in a secure Firebase cloud database. No funny business, just privacy and protection.</p>
+                                <p>All your data is safely stored in a secure Firebase cloud database. Nobody wants to see your crap pics anyway (joking)</p>
                             </div>
                         </div>
                     </div>
@@ -260,7 +263,7 @@
                         <div class="info-tile-inner">
                             <div class="info-footer">
                                 <i class="fas fa-heart info-icon-pulse"></i>
-                                <p>That's it — have fun, be real, and thanks again for helping us build something better.</p>
+                                <p>That's it, have fun, be real, and thanks again for helping us build something better.</p>
                             </div>
                         </div>
                     </div>
@@ -269,16 +272,76 @@
         </div>
     </section>
     
-    <section class="cta-section">
-        <div class="cta-content">
-            <p class="waitlist-title">JOIN THE WAITLIST</p>
-            <form id="signup-form">
-                <input type="email" id="email" placeholder="Your email address" required>
-                <button type="submit">JOIN NOW</button>
-            </form>
-            <div id="confirmation" class="hidden">Thank you! We'll notify you when the app launches.</div>
+    <div class="section-divider"></div>
+    
+    <section id="beta-feedback" class="beta-feedback-section">
+        <div class="beta-container">
+            <div class="beta-sections-header">
+                <div class="beta-section-title-container full-width">
+                    <h2 class="beta-section-title">How to Provide <span class="accent-color">Feedback</span></h2>
+                    <p class="feedback-subtitle">Choose any of these four ways to share your thoughts.</p>
+                </div>
+            </div>
+            
+            <div class="feedback-methods-container">
+                <div class="feedback-method">
+                    <div class="feedback-icon-container">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Feedback Form</h3>
+                    <p>Fill out our detailed feedback form to share your experience with the beta test.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdeXOCw9wdxb4u6ZeAe08AXDDQQ0fVO3R_vL7HvkRtoyi6Z2A/viewform?usp=dialog" class="feedback-link" id="feedback-form-link" target="_blank">Open Feedback Form</a>
+                </div>
+                
+                <div class="feedback-method">
+                    <div class="feedback-icon-container">
+                        <i class="fab fa-app-store-ios"></i>
+                    </div>
+                    <h3>TestFlight</h3>
+                    <p>Use the built-in feedback tool in TestFlight for quick in-app reports and suggestions.</p>
+                    <a href="https://apps.apple.com/us/app/testflight/id899247664" class="feedback-link" target="_blank">Open TestFlight App</a>
+                </div>
+                
+                <div class="feedback-method">
+                    <div class="feedback-icon-container">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Directly</h3>
+                    <p>Send your thoughts, screenshots, or questions directly to me.</p>
+                    <a href="mailto:changezahm@gmail.com" class="feedback-link">changezahm@gmail.com</a>
+                </div>
+                
+                <div class="feedback-method">
+                    <div class="feedback-icon-container">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <h3>Schedule a Coffee</h3>
+                    <p>Book a 30-minute coffee chat to discuss your experience with Changez face-to-face (I am so lonely).</p>
+                    <div class="calendar-button-container">
+                        <!-- Google Calendar Appointment Scheduling begin -->
+                        <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+                        <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+                        <script>
+                        (function() {
+                          var target = document.currentScript;
+                          window.addEventListener('load', function() {
+                            calendar.schedulingButton.load({
+                              url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2FiAatsCRsWPZndMUYAezChHgFMrbuw7KtwZuAwjjJlMAgEGg1DMi7bZshWUMVv3disyUYSHOa?gv=true',
+                              color: '#039BE5',
+                              label: 'Book an appointment',
+                              target,
+                            });
+                          });
+                        })();
+                        </script>
+                        <!-- end Google Calendar Appointment Scheduling -->
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+    
+    <div class="section-divider"></div>
 
     <footer>
         <div class="footer-content">
@@ -319,6 +382,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <!-- Our bundled JavaScript with Firebase -->
+    <script src="dist/main.bundle.js"></script>
 </body>
 </html>
