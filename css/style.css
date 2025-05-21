@@ -1795,6 +1795,7 @@ p {
 
 /* Media query for feedback methods on small screens */
 @media (max-width: 768px) {
+    /* Feedback methods layout */
     .feedback-methods-container {
         flex-direction: column;
         align-items: center;
@@ -1840,6 +1841,33 @@ p {
 }
 
 @media (max-width: 768px) {
+    /* Reorder beta content - put screenshots below form on mobile */
+    .beta-content {
+        flex-direction: column;
+    }
+    
+    .screenshots-display {
+        flex: 1;
+        max-width: 100%;
+        order: 2; /* Move screenshots below */
+        margin-top: 2rem;
+    }
+    
+    .beta-signup-form-container {
+        flex: 1;
+        max-width: 100%;
+        order: 1; /* Move form above */
+        margin-top: 1rem;
+        margin-left: 0;
+    }
+    
+    /* Center the title with the form */
+    .form-title {
+        text-align: center;
+        white-space: normal;
+        width: 100%;
+    }
+    
     .screenshots-row {
         flex-wrap: wrap;
         justify-content: center;
@@ -1864,6 +1892,22 @@ p {
     
     .beta-section-subtitle {
         font-size: 0.95rem;
+    }
+    
+    /* Fix feedback button containment */
+    .feedback-link {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        width: 90%;
+        max-width: 220px;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    .calendar-button-container {
+        width: 90%;
+        max-width: 220px;
+        margin: 0.5rem auto;
     }
 }
 
