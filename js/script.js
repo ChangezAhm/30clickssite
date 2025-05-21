@@ -1,6 +1,8 @@
 import { saveBetaTester } from './firebase-config.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM loaded, initializing polaroid gallery");
+    
     // Smooth scrolling with offset for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -22,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // Loader animation has been removed
     
     // Polaroid gallery functionality
     const polaroids = document.querySelectorAll('.polaroid');
@@ -30,57 +31,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const galleryNext = document.querySelector('.gallery-next');
     const galleryCounter = document.querySelector('.gallery-counter');
     
+    console.log("Initializing polaroid gallery rotation");
+    console.log(`Found ${polaroids.length} polaroid elements`);
+    
     if (polaroids.length && galleryPrev && galleryNext && galleryCounter) {
+        console.log("All gallery controls found, setting up rotation");
+        
         let currentIndex = 0;
         const totalPolaroids = polaroids.length;
         
         // Update gallery display
         const updateGallery = () => {
-            // Update counter display
-            galleryCounter.textContent = `${currentIndex + 1}/${totalPolaroids}`;
-            
-            // Update polaroid positions
-            polaroids.forEach((polaroid, index) => {
-                // Calculate offset from current (considering wrap around)
-                let offset = (index - currentIndex + totalPolaroids) % totalPolaroids;
+            try {
+                console.log(`Updating gallery to show image ${currentIndex + 1}/${totalPolaroids}`);
                 
-                // Reset and set new transforms with smoother transitions
-                polaroid.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                // Update counter display
+                galleryCounter.textContent = `${currentIndex + 1}/${totalPolaroids}`;
                 
-                // Apply different transforms based on position
-                if (offset === 0) {
-                    // Current polaroid - front and center
-                    polaroid.style.transform = 'translateZ(0) rotate(0deg)';
-                    polaroid.style.zIndex = '7';
-                    polaroid.style.opacity = '1';
-                } else if (offset === 1) {
-                    // Next polaroid - slightly to the right
-                    polaroid.style.transform = 'translateZ(-50px) translateX(10px) translateY(10px) rotate(5deg)';
-                    polaroid.style.zIndex = '6';
-                    polaroid.style.opacity = '0.9';
-                } else if (offset === 2) {
-                    // 2 ahead - more to the right and further back
-                    polaroid.style.transform = 'translateZ(-100px) translateX(-10px) translateY(5px) rotate(-5deg)';
-                    polaroid.style.zIndex = '5';
-                    polaroid.style.opacity = '0.8';
-                } else if (offset === 3) {
-                    polaroid.style.transform = 'translateZ(-150px) translateX(5px) translateY(-5px) rotate(2deg)';
-                    polaroid.style.zIndex = '4';
-                    polaroid.style.opacity = '0.7';
-                } else if (offset === 4) {
-                    polaroid.style.transform = 'translateZ(-200px) translateX(-7px) translateY(7px) rotate(-3deg)';
-                    polaroid.style.zIndex = '3';
-                    polaroid.style.opacity = '0.6';
-                } else if (offset === 5) {
-                    polaroid.style.transform = 'translateZ(-250px) translateX(15px) translateY(0px) rotate(7deg)';
-                    polaroid.style.zIndex = '2';
-                    polaroid.style.opacity = '0.5';
-                } else {
-                    polaroid.style.transform = 'translateZ(-300px) translateX(-20px) translateY(-5px) rotate(-8deg)';
-                    polaroid.style.zIndex = '1';
-                    polaroid.style.opacity = '0.4';
-                }
-            });
+                // Update polaroid positions
+                polaroids.forEach((polaroid, index) => {
+                    // Calculate offset from current (considering wrap around)
+                    let offset = (index - currentIndex + totalPolaroids) % totalPolaroids;
+                    
+                    // Apply transforms based on position
+                    let transform = '';
+                    let zIndex = '1';
+                    let opacity = '0.4';
+                    
+                    switch(offset) {
+                        case 0: // Current polaroid - front and center
+                            transform = 'translateZ(0) rotate(0deg)';
+                            zIndex = '7';
+                            opacity = '1';
+                            break;
+                        case 1: // Next polaroid - slightly to the right
+                            transform = 'translateZ(-50px) translateX(10px) translateY(10px) rotate(5deg)';
+                            zIndex = '6';
+                            opacity = '0.9';
+                            break;
+                        case 2: // 2 ahead
+                            transform = 'translateZ(-100px) translateX(-10px) translateY(5px) rotate(-5deg)';
+                            zIndex = '5';
+                            opacity = '0.8';
+                            break;
+                        case 3:
+                            transform = 'translateZ(-150px) translateX(5px) translateY(-5px) rotate(2deg)';
+                            zIndex = '4';
+                            opacity = '0.7';
+                            break;
+                        case 4:
+                            transform = 'translateZ(-200px) translateX(-7px) translateY(7px) rotate(-3deg)';
+                            zIndex = '3';
+                            opacity = '0.6';
+                            break;
+                        case 5:
+                            transform = 'translateZ(-250px) translateX(15px) translateY(0px) rotate(7deg)';
+                            zIndex = '2';
+                            opacity = '0.5';
+                            break;
+                        default:
+                            transform = 'translateZ(-300px) translateX(-20px) translateY(-5px) rotate(-8deg)';
+                            zIndex = '1';
+                            opacity = '0.4';
+                    }
+                    
+                    // Reset and set new transforms with smoother transitions
+                    polaroid.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
+                    polaroid.style.transform = transform;
+                    polaroid.style.zIndex = zIndex;
+                    polaroid.style.opacity = opacity;
+                });
+            } catch (error) {
+                console.error("Error updating polaroid gallery:", error);
+            }
         };
         
         // Navigate to previous polaroid
@@ -98,37 +121,52 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize gallery
         updateGallery();
         
-        // Auto-rotate gallery every 3 seconds
-        let galleryInterval;
+        // Auto-rotation functionality
+        let galleryInterval = null;
         
         function startGalleryRotation() {
+            console.log("Starting gallery auto-rotation");
             // Clear any existing interval first
-            if (galleryInterval) clearInterval(galleryInterval);
+            if (galleryInterval) {
+                clearInterval(galleryInterval);
+                galleryInterval = null;
+            }
             
-            // Create new interval
+            // Create new interval - rotate every 3 seconds
             galleryInterval = setInterval(() => {
                 currentIndex = (currentIndex + 1) % totalPolaroids;
                 updateGallery();
-            }, 3000); // Faster rotation (3s instead of 5s)
+            }, 3000);
         }
         
         // Start the rotation immediately
         startGalleryRotation();
         
+        // Also restart gallery rotation when page fully loads
+        window.addEventListener('load', () => {
+            console.log("Window fully loaded, ensuring gallery rotation");
+            startGalleryRotation();
+        });
+        
         // Pause auto-rotation when hovering over the gallery
         const polaroidStack = document.querySelector('.polaroid-stack');
         if (polaroidStack) {
             polaroidStack.addEventListener('mouseenter', () => {
-                clearInterval(galleryInterval);
+                console.log("Mouse entered gallery, pausing rotation");
+                if (galleryInterval) {
+                    clearInterval(galleryInterval);
+                    galleryInterval = null;
+                }
             });
             
             polaroidStack.addEventListener('mouseleave', () => {
+                console.log("Mouse left gallery, resuming rotation");
                 startGalleryRotation();
             });
         }
+    } else {
+        console.error("Could not initialize polaroid gallery - missing required elements");
     }
-    
-    // No carousel functionality needed anymore
     
     // Screenshot placeholders functionality
     const screenshotPlaceholders = document.querySelectorAll('.screenshot-placeholder');
@@ -154,8 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Add click event listener for upload simulation
             placeholder.addEventListener('click', () => {
-                // This would normally open a file picker, but for demo purposes
-                // we'll just change the placeholder appearance
                 placeholder.innerHTML = '<i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--primary);"></i><div style="margin-top: 10px;">Uploading...</div>';
                 placeholder.style.borderColor = 'var(--primary)';
                 placeholder.style.backgroundColor = 'rgba(255, 0, 128, 0.1)';
@@ -311,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(animateOnScroll, 500);
     
     // Admin function to export waitlist to CSV/Excel
-    // Access this by typing exportWaitlist() in the browser console
     window.exportWaitlist = function() {
         try {
             // Get stored emails
