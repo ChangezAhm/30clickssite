@@ -348,4 +348,121 @@ document.addEventListener('DOMContentLoaded', () => {
             return 'Error clearing waitlist. Check console for details.';
         }
     };
+    
+    // Beta Signup Form Functionality
+    const betaForm = document.getElementById('beta-signup-form');
+    const betaConfirmation = document.getElementById('beta-confirmation');
+    
+    if (betaForm && betaConfirmation) {
+        betaForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Simulate sending data
+            const firstName = document.getElementById('first-name').value;
+            const surname = document.getElementById('surname').value;
+            const email = document.getElementById('beta-email').value;
+            
+            console.log('Beta signup data:', { firstName, surname, email });
+            
+            // Show loading state
+            const submitBtn = betaForm.querySelector('.beta-submit-btn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            submitBtn.disabled = true;
+            
+            // Simulate a server request with delay
+            setTimeout(() => {
+                betaForm.style.display = 'none';
+                betaConfirmation.classList.remove('hidden');
+                
+                // Store beta tester data
+                let betaTesters = [];
+                try {
+                    const storedTesters = localStorage.getItem('30clicks_beta_testers');
+                    if (storedTesters) {
+                        betaTesters = JSON.parse(storedTesters);
+                    }
+                } catch (error) {
+                    console.error('Error loading saved beta testers:', error);
+                }
+                
+                betaTesters.push({
+                    firstName: firstName,
+                    surname: surname,
+                    email: email,
+                    timestamp: new Date().toISOString()
+                });
+                
+                try {
+                    localStorage.setItem('30clicks_beta_testers', JSON.stringify(betaTesters));
+                    console.log('Beta tester saved! Current count:', betaTesters.length);
+                } catch (error) {
+                    console.error('Error saving beta tester:', error);
+                }
+            }, 2000);
+        });
+    }
+    
+    // Screenshot interactive hover effects
+    const screenshotItems = document.querySelectorAll('.screenshot-item');
+    if (screenshotItems.length) {
+        screenshotItems.forEach((item) => {
+            const phoneFrame = item.querySelector('.phone-frame');
+            
+            item.addEventListener('mouseenter', () => {
+                item.classList.add('active');
+                if (phoneFrame) {
+                    phoneFrame.style.transform = 'scale(1.05) translateY(-10px)';
+                    phoneFrame.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.5)';
+                }
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.classList.remove('active');
+                if (phoneFrame) {
+                    phoneFrame.style.transform = '';
+                    phoneFrame.style.boxShadow = '';
+                }
+            });
+        });
+    }
+    
+    // Admin function to export beta testers
+    window.exportBetaTesters = function() {
+        try {
+            // Get stored beta testers
+            const storedTesters = localStorage.getItem('30clicks_beta_testers');
+            if (!storedTesters) {
+                console.log('No beta testers registered yet.');
+                return;
+            }
+            
+            const betaTesters = JSON.parse(storedTesters);
+            console.log(`Found ${betaTesters.length} beta testers.`);
+            
+            // Convert to CSV
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "First Name,Surname,Email,Signup Date\n";
+            
+            betaTesters.forEach(entry => {
+                const date = new Date(entry.timestamp).toLocaleString();
+                csvContent += `${entry.firstName},${entry.surname},${entry.email},${date}\n`;
+            });
+            
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "30clicks_beta_testers.csv");
+            document.body.appendChild(link);
+            
+            // Trigger download
+            link.click();
+            document.body.removeChild(link);
+            
+            return `Exported ${betaTesters.length} beta testers successfully!`;
+        } catch (error) {
+            console.error('Error exporting beta testers:', error);
+            return 'Error exporting beta testers. Check console for details.';
+        }
+    };
 });
