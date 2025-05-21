@@ -22,19 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // Loader animation - immediately fade out and remove it
-    const loader = document.querySelector('.loader');
-    
-    // Immediately start removing the loader
-    if (loader) {
-        // Set to hidden immediately
-        loader.classList.add('hidden');
-        
-        // Remove from DOM after animation completes
-        setTimeout(() => {
-            loader.remove(); // Completely remove from DOM
-        }, 1000);
-    }
+    // Loader animation has been removed
     
     // Polaroid gallery functionality
     const polaroids = document.querySelectorAll('.polaroid');
