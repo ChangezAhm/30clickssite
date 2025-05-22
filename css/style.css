@@ -1816,6 +1816,11 @@ p {
         margin-top: 0;
         margin-bottom: 1rem;
     }
+    
+    /* Center feedback subtitle on mobile only */
+    .feedback-subtitle {
+        text-align: center;
+    }
 }
 
 /* Responsive styles */
